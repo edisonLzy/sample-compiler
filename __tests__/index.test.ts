@@ -1,4 +1,4 @@
-import { tokenize, parse, transform } from '../src/index';
+import { tokenize, parse, transform, compiler } from '../src/index';
 import type { Token, RootNode } from '../src/index';
 const template = `<div>
     <p> Vue </p>
@@ -158,5 +158,14 @@ describe('test compiler', () => {
       },
     ]);
     expect(ast).toEqual(result);
+  });
+  it('compiler to code', () => {
+    const removeSpace = (s: string) => s.replace(/\s/g, '');
+    let result = `function render (){
+      return h('div',[h('p','Vue'),h('p','React')])
+    }`;
+    let code = compiler(template);
+    [result, code] = [result, code].map(removeSpace);
+    expect(result).toEqual(code);
   });
 });

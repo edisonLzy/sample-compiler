@@ -2,19 +2,23 @@ import { tokenize } from './tokenize';
 
 type Children = Array<ElementNode | TextNode>;
 
+type OtherProps = {
+  [k: string]: any;
+};
+
 export type RootNode = {
   type: 'Root';
   children: Children;
-};
+} & OtherProps;
 export type ElementNode = {
   type: 'Element';
   tag: string;
   children: Children;
-};
+} & OtherProps;
 export type TextNode = {
   type: 'Text';
   content: string;
-};
+} & OtherProps;
 export type ASTNode = ElementNode | TextNode | RootNode;
 export function parse(input: string) {
   const tokens = tokenize(input);
